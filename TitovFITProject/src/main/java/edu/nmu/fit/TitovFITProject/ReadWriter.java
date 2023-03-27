@@ -11,7 +11,7 @@ public class ReadWriter {
 
     private static final String FILE_NAME_TO_READ = "src/main/java/resources/Input";
     private static final String EXTENTION = ".xlsx";
-    private static final String SHEET_NAME = "Hairdryers";
+    private static final String SHEET_NAME = "Items";
     private static int ROW_NUM = 0;
     public byte[] saveToFile(XSSFWorkbook workbook, String version){
         try {
@@ -53,6 +53,7 @@ public class ReadWriter {
     }
 
     public void pushDataToFile(List<String> data, XSSFWorkbook workbook){
+        if (data==null) return;
         XSSFSheet sheet = workbook.getSheet(SHEET_NAME);
         XSSFRow row = sheet.createRow(ROW_NUM);
 
@@ -65,12 +66,13 @@ public class ReadWriter {
     }
 
     public XSSFWorkbook startFile(){
+        ROW_NUM = 0;
         XSSFWorkbook workbook = new XSSFWorkbook();
         workbook.createSheet(SHEET_NAME);
         List<String> data = new ArrayList<String>();
-
-        data.add("Description");
         data.add("Number");
+        data.add("Description");
+
         data.add("Link");
         data.add("Price");
         pushDataToFile(data, workbook);

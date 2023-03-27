@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
@@ -26,17 +27,17 @@ import java.nio.file.Paths;
 
 @Controller
 public class MainController {
-
+    SeleniumManager seleniumManager = new SeleniumManager();
     @GetMapping({"/","/index"})
     public String mainPage(Model model){
+        model.addAttribute("item", new Item());
         return "index";
     }
-    @PostMapping("/getFans")
-    public ResponseEntity<ByteArrayResource> getFans() throws IOException {
+    @PostMapping("/index")
+    public ResponseEntity<ByteArrayResource> getFans(@ModelAttribute Item item) throws IOException {
         ReadWriter readWriter = new ReadWriter();
         XSSFWorkbook workbook = readWriter.startFile();
-        SeleniumManager seleniumManager = new SeleniumManager();
-        Elements webElements = seleniumManager.getHairdryers();
+        Elements webElements = seleniumManager.getHairdryers(item.getItemName());
         for (int i = 0; i< webElements.toArray().length; i++){
             readWriter.pushDataToFile(seleniumManager.getAttributes(webElements.get(i)),workbook);
         }
