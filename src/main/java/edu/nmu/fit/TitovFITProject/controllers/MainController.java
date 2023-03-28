@@ -55,5 +55,10 @@ public class MainController {
         return responseEntity;
     }
 
+    @GetMapping({"/about"})
+    public String gotoAboutPage(Model model){
+        return "about";
+    }
+
     private static final String DIRECTORY = "src/main/java/resources/Result";
 }
