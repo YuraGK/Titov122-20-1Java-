@@ -10,7 +10,7 @@
 
 
 <form action="/index" th:action="@{/index}" th:object="${item}" method="post">
-    <input type="text" th:field="*{itemName}" style="border: 7px inset #e6fffe; margin: 15px; line-height: 1.5;">
+    <input type="text" placeholder="Введіть назву товару" required th:field="*{itemName}" style="border: 7px inset #e6fffe; margin: 15px; line-height: 1.5;">
     <br/>
     <input style="font-family: 'Comic Sans MS', 'Comic Sans', cursive; font-size: 30px; border: 34px inset #e6fffe; background: border-box #e6ffff; width: 500px; height: 127px; margin: 15px; line-height: 1.5; text-align: center;" type="submit" onclick="getFans" value="Скачати EXEL з товарами">
 </form>
