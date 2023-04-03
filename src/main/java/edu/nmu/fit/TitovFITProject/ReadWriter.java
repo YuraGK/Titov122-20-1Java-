@@ -7,10 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReadWriter {
-    private static final String FILE_NAME_TO_SAVE = "Result";
-
-    private static final String FILE_NAME_TO_READ = "src/main/java/resources/Input";
-    private static final String EXTENTION = ".xlsx";
     private static final String SHEET_NAME = "Items";
     private static int ROW_NUM = 0;
     public byte[] saveToFile(XSSFWorkbook workbook, String version){
@@ -33,23 +29,6 @@ public class ReadWriter {
 
 
         return null;
-    }
-
-    public XSSFWorkbook readFromFile(String filePath){
-        if (filePath==null){
-            filePath=FILE_NAME_TO_READ+EXTENTION;
-        }
-        XSSFWorkbook workbook = null;
-        try {
-            FileInputStream excelFile = new FileInputStream(new File(filePath));
-            workbook = new XSSFWorkbook(excelFile);
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-        return workbook;
     }
 
     public void pushDataToFile(List<String> data, XSSFWorkbook workbook){

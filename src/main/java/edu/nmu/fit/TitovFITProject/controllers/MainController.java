@@ -5,7 +5,6 @@ import edu.nmu.fit.TitovFITProject.SeleniumManager;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jsoup.select.Elements;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,16 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.RestTemplate;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 
 @Controller
 public class MainController {
@@ -34,16 +23,13 @@ public class MainController {
         return "index";
     }
     @PostMapping("/index")
-    public ResponseEntity<ByteArrayResource> getFans(@ModelAttribute Item item) throws IOException, InterruptedException {
+    public ResponseEntity<ByteArrayResource> getFans(@ModelAttribute Item item){
         ReadWriter readWriter = new ReadWriter();
         XSSFWorkbook workbook = readWriter.startFile();
         Elements webElements = seleniumManager.getHairdryers(item.getItemName());
         for (int i = 0; i< webElements.toArray().length; i++){
             readWriter.pushDataToFile(seleniumManager.getAttributes(webElements.get(i)),workbook);
         }
-
-
-
         byte[] arrayOfBytes = readWriter.saveToFile(workbook, "1");
 
         ByteArrayResource byteArrayResource= new ByteArrayResource(arrayOfBytes);
@@ -56,7 +42,7 @@ public class MainController {
     }
 
     @GetMapping({"/about"})
-    public String gotoAboutPage(Model model){
+    public String goToAboutPage(){
         return "about";
     }
 
