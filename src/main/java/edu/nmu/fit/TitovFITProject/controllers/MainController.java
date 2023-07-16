@@ -30,15 +30,15 @@ public class MainController {
         for (int i = 0; i< webElements.toArray().length; i++){
             readWriter.pushDataToFile(seleniumManager.getAttributes(webElements.get(i)),workbook);
         }
-        byte[] arrayOfBytes = readWriter.saveToFile(workbook, "1");
+        byte[] arrayOfBytes = readWriter.saveToFile(workbook);
 
         ByteArrayResource byteArrayResource= new ByteArrayResource(arrayOfBytes);
-        ResponseEntity responseEntity = ResponseEntity.ok()
+
+        return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION,"attachment;filename="+DIRECTORY+".xls")
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .contentLength(arrayOfBytes.length)
                 .body(byteArrayResource);
-        return responseEntity;
     }
 
     @GetMapping({"/about"})

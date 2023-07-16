@@ -9,20 +9,16 @@ import java.util.List;
 public class ReadWriter {
     private static final String SHEET_NAME = "Items";
     private static int ROW_NUM = 0;
-    public byte[] saveToFile(XSSFWorkbook workbook, String version){
+    public byte[] saveToFile(XSSFWorkbook workbook){
         try {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            try {
+            try (bos) {
                 workbook.write(bos);
-            } finally {
-                bos.close();
             }
             byte[] bytes = bos.toByteArray();
             workbook.close();
             System.out.println("File saved successfully");
             return bytes;
-        }catch (FileNotFoundException e){
-            e.printStackTrace();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -48,7 +44,7 @@ public class ReadWriter {
         ROW_NUM = 0;
         XSSFWorkbook workbook = new XSSFWorkbook();
         workbook.createSheet(SHEET_NAME);
-        List<String> data = new ArrayList<String>();
+        List<String> data = new ArrayList<>();
         data.add("Number");
         data.add("Description");
 

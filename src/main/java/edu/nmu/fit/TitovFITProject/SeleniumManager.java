@@ -15,6 +15,7 @@ import java.util.List;
 
 public class SeleniumManager {
     private static int ITEM_NUM = 1;
+    private static final int DURATION_OF_SECONDS = 10;
     ChromeOptions co;
     WebDriver driver;
     public SeleniumManager(){
@@ -77,7 +78,7 @@ public class SeleniumManager {
         Elements temp;
         while(button!=null){
             driver.get("https://rozetka.com.ua"+button.attr("href"));
-            WebElement firstResult = new WebDriverWait(driver, Duration.ofSeconds(10))
+            WebElement firstResult = new WebDriverWait(driver, Duration.ofSeconds(DURATION_OF_SECONDS))
                     .until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@class='goods-tile__picture ng-star-inserted']")));
             doc = Jsoup.parse(driver.getPageSource());
             temp = doc.getElementsByAttributeValue("class","goods-tile__inner");
